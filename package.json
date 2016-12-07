@@ -8,6 +8,11 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.13.3"
+    "body-parser": "^1.15.2",
+    "connect-cas2": "github:k2data/connect-cas2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.13.3",
+    "express-session": "^1.14.2",
+    "session-file-store": "^1.0.0"
   }
 }
