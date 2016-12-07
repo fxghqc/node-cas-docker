@@ -10,6 +10,8 @@ const FileStore = require('session-file-store')(session);
 
 // Constants
 const PORT = 3000;
+const SERVICE_PREFIX = process.env.SERVICE_PREFIX
+const SERVER_PATH = process.env.SERVER_PATH
 
 // App
 const app = express();app.use(cookieParser());
@@ -25,8 +27,8 @@ var casClient = new ConnectCas({
       /\/ignore/
     ],
     match: [],
-    servicePrefix: 'http://10.1.10.17:1337',
-    serverPath: 'https://10.1.10.20:8443',
+    servicePrefix: SERVICE_PREFIX,
+    serverPath: SERVER_PATH,
     paths: {
       validate: '/cas/validate',
       serviceValidate: '/cas/serviceValidate',
