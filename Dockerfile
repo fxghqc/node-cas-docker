@@ -1,13 +1,13 @@
 FROM node:7.2
-RUN groupadd -r node && useradd -r -g node node
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /home/node/app
+RUN chown -R node:node /home/node/app
+WORKDIR /home/node/app
 
-COPY package.json /usr/src/app/
+COPY package.json /home/node/app/
 RUN npm install
 
-COPY . /usr/src/app
+COPY . /home/node/app
 
 EXPOSE 3000
 

@@ -10,17 +10,21 @@ const FileStore = require('session-file-store')(session);
 
 // Constants
 const PORT = 3000;
-const SERVICE_PREFIX = process.env.SERVICE_PREFIX
-const SERVER_PATH = process.env.SERVER_PATH
+const SERVICE_PREFIX = process.env.SERVICE_PREFIX;
+const SERVER_PATH = process.env.SERVER_PATH;
+const USE_CAS = process.env.SERVER_PATH === 'false'
+  ? false : true;
 
 // App
-const app = express();app.use(cookieParser());
+const app = express();
+app.use(cookieParser());
 app.use(session({
   store: new FileStore,
   secret: 'keyboard cat',
   resave: true,
   saveUninitialized: true
 }));
+
 var casClient = new ConnectCas({
   debug: true,
     ignore: [
@@ -52,7 +56,9 @@ var casClient = new ConnectCas({
     }
 });
 
-app.use(casClient.core());
+if (USE_CAS) {
+  app.use(casClient.core());
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
