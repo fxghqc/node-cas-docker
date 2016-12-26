@@ -9,6 +9,7 @@ const FileStore = require('session-file-store')(session);
 
 // Constants
 const PORT = 3000;
+const APP_NAME = process.env.APP_NAME || 'app'
 const USE_CAS = process.env.USE_CAS === 'false'
   ? false : true;
 let casClient
@@ -20,7 +21,8 @@ app.use(session({
   store: new FileStore,
   secret: 'keyboard cat',
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  name: 'kmx.' + APP_NAME + '.connect.sid'
 }));
 
 
