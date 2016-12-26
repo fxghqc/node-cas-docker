@@ -9,37 +9,44 @@ const FileStore = require('session-file-store')(session);
 
 // Constants
 const PORT = 3000;
-const APP_NAME = process.env.APP_NAME || 'app'
+const APP_NAME = process.env.APP_NAME || 'app';
 const USE_CAS = process.env.USE_CAS === 'false'
   ? false : true;
-let casClient
+let casClient;
 
-// App
-const app = express();
-app.use(cookieParser());
-app.use(session({
+const sessionOptions = {
   store: new FileStore,
   secret: 'keyboard cat',
   resave: true,
   saveUninitialized: true,
   name: 'kmx.' + APP_NAME + '.connect.sid'
-}));
+};
+
+// App
+const app = express();
+app.use(cookieParser());
+app.use(session(sessionOptions));
 
 
 if (USE_CAS) {
-  casClient = require('./src/casClient')
+  casClient = require('./src/casClient');
   app.use(casClient.core());
 }
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 if (USE_CAS) {
-  app.get('/logout', casClient.logout());
-  // // or do some logic yourself
-  // app.get('/logout', function(req, res, next) {
-  //   // Do whatever you like here, then call the logout middleware
-  //   casClient.logout()(req, res, next);
-  // });
+  app.get('/logout', function(req, res, next) {
+    // req.session.destroy(function (err) {
+    //   if (err) {
+    //     console.error(err);
+    //   } else {
+    //     // clearCookie will make slo not working.
+    //     res.clearCookie(sessionOptions.name);
+    casClient.logout()(req, res, next);
+    //   }
+    // });
+  });
 }
 
 app.use(express.static('public'));
