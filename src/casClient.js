@@ -9,7 +9,7 @@ module.exports = new ConnectCas({
   debug: true,
   ignore: [
     /\/ignore/,
-    /^.*\.js$/  // ignore webpack react router splitted codes 
+    /^.*\.js$/  // ignore webpack react router splitted codes
   ],
   match: [],
   servicePrefix: SERVICE_PREFIX,
@@ -22,6 +22,7 @@ module.exports = new ConnectCas({
     logout: '/cas/logout',
     proxyCallback: ''
   },
+  restletIntegration: null,
   redirect: false,
   gateway: false,
   renew: false,

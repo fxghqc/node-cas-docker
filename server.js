@@ -2,6 +2,7 @@
 
 const express = require('express');
 const path = require('path');
+const uuid = require('uuid');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -29,6 +30,21 @@ app.use(session(sessionOptions));
 
 
 if (USE_CAS) {
+  app.use((req, res, next) => {
+    req.sn = uuid.v4();
+    function getLogger(type = 'log', ...args) {
+      let user = 'unknown';
+      try {
+        user = req.session.cas.user;
+      } catch(e) {}
+
+      return console[type].bind(console[type], `${req.sn}|${user}|${req.ip}|`, ...args);
+    }
+
+    req.getLogger = getLogger;
+    next();
+  });
+
   casClient = require('./src/casClient');
   app.use(casClient.core());
 }
@@ -36,6 +52,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 if (USE_CAS) {
+  app.get('/cas-info', (req, res, next) => {
+    res.json(req.session.cas);
+  })
   app.get('/logout', function(req, res, next) {
     // req.session.destroy(function (err) {
     //   if (err) {

@@ -4,8 +4,8 @@ RUN mkdir -p /home/node/app
 RUN chown -R node:node /home/node/app
 WORKDIR /home/node/app
 
-COPY package.json /home/node/app/
-RUN npm install
+COPY package.json yarn.lock /home/node/app/
+RUN npm install -g yarn && yarn
 
 COPY . /home/node/app
 
