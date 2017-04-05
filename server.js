@@ -9,7 +9,7 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
 // Constants
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const APP_NAME = process.env.APP_NAME || 'app';
 const USE_CAS = process.env.USE_CAS === 'false'
   ? false : true;
