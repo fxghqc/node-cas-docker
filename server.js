@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
+const proxy = require('http-proxy-middleware');
 
 // Constants
 const PORT = process.env.PORT || 3000;
@@ -28,6 +29,14 @@ const app = express();
 app.use(cookieParser());
 app.use(session(sessionOptions));
 
+if (process.env.BACKUP_URL) {
+  const url = process.env.BACKUP_URL
+  const conf = {target: url, changeOrigin: true}
+  app.use('/explorer.html', proxy(conf));
+  app.use('/explorer.js', proxy(conf));
+  app.use('/static', proxy(conf));
+  app.use('/webhdfs', proxy(conf));
+}
 
 if (USE_CAS) {
   app.use((req, res, next) => {
