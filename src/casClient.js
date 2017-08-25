@@ -25,7 +25,8 @@ module.exports = new ConnectCas({
   },
   restletIntegration: null,
   redirect: function (req, res) {
-    if (req.session.lastUrl.indexOf('cas-info') >= 0) {
+    if (req.session.lastUrl.indexOf('cas-info') >= 0 &&
+      req.header('x-client-fetch')) {
       return '/'
     }
   },
