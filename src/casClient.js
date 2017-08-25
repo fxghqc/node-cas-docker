@@ -24,7 +24,11 @@ module.exports = new ConnectCas({
     proxyCallback: ''
   },
   restletIntegration: null,
-  redirect: false,
+  redirect: function (req, res) {
+    if (req.session.lastUrl.indexOf('cas-info') >= 0) {
+      return '/'
+    }
+  },
   gateway: false,
   renew: false,
   slo: true,
