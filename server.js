@@ -32,7 +32,7 @@ app.use(session(sessionOptions));
 if (process.env.HDFS_API_URL) {
   const url = process.env.HDFS_API_URL
   const conf = {target: url, changeOrigin: true}
-  app.use('/webhdfs', proxy(conf))
+  app.use('/jmx', proxy(conf))
 }
 
 if (process.env.HADOOP_API_URL) {
