@@ -26,8 +26,7 @@ module.exports = new ConnectCas({
   restletIntegration: null,
   redirect: function (req, res) {
     if (req.session.lastUrl &&
-      req.session.lastUrl.indexOf('cas-info') >= 0 &&
-      req.header('x-client-fetch')) {
+      req.session.lastUrl.indexOf('cas-info') >= 0) {
       return '/'
     }
   },
@@ -40,7 +39,7 @@ module.exports = new ConnectCas({
     filter: []
   },
   fromAjax: {
-    header: 'x-client-ajax',
+    header: 'x-client-fetch',
     status: 418
   }
 });
