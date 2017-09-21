@@ -1,6 +1,6 @@
 {
   "name": "node-cas-docker",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Node.js CAS Client on Docker",
   "author": "fx <konxiao@gmail.com>",
   "main": "server.js",
