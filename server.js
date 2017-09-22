@@ -1,5 +1,6 @@
 'use strict';
 
+const compression = require('compression');
 const express = require('express');
 const path = require('path');
 const uuid = require('uuid');
@@ -14,6 +15,9 @@ const PORT = process.env.PORT || 3000;
 const APP_NAME = process.env.APP_NAME || 'app';
 const USE_CAS = process.env.USE_CAS === 'false'
   ? false : true;
+const USE_GZIP = process.env.USE_GZIP
+  ? (process.env.USE_GZIP === 'true' ? true : false)
+  : true;
 let casClient;
 
 const sessionOptions = {
@@ -26,6 +30,9 @@ const sessionOptions = {
 
 // App
 const app = express();
+if (USE_GZIP) {
+  app.use(compression());
+}
 app.use(cookieParser());
 app.use(session(sessionOptions));
 
