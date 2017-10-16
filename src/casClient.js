@@ -10,7 +10,8 @@ module.exports = new ConnectCas({
   ignore: [
     /\/ignore/,
     /^.*\.js$/,  // ignore webpack react router splitted codes
-    /^.*\.css$/  // ignore css codes
+    /^.*\.css$/,  // ignore css codes
+    /^.*\.(png|gif|cur)$/ // ignore images
   ],
   match: [],
   servicePrefix: SERVICE_PREFIX,
