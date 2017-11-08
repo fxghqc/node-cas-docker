@@ -9,9 +9,11 @@ module.exports = new ConnectCas({
   debug: true,
   ignore: [
     /\/ignore/,
+    /\/s\/public/,
     /^.*\.js$/,  // ignore webpack react router splitted codes
     /^.*\.css$/,  // ignore css codes
-    /^.*\.(png|gif|cur|ico|svg|jpeg|jpg)$/ // ignore images
+    /^.*\.(png|gif|cur|ico|svg|jpeg|jpg)$/, // ignore images
+    /^.*\.(woff|woff2|otf|ttf|eot)$/ // ignore fonts
   ],
   match: [],
   servicePrefix: SERVICE_PREFIX,
