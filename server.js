@@ -45,13 +45,13 @@ if (process.env.HADOOP_API_URL) {
   app.use(proxy(filter, { target: process.env.HADOOP_API_URL, changeOrigin: true }))
 }
 
-if (process.env.CM_API_URL) {
+if (process.env.CM_URL) {
   const filter = (pathname, req) => (
     pathname.match(/^\/api\/v14\/clusters\/cluster\/services\/yarn\/config/) &&
       req.method === 'GET'
   )
 
-  app.use(proxy(filter, { target: process.env.CM_API_URL, changeOrigin: true }))
+  app.use(proxy(filter, { target: process.env.CM_URL, changeOrigin: true }))
 }
 
 if (USE_CAS) {
