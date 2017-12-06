@@ -37,13 +37,21 @@ app.use(cookieParser());
 app.use(session(sessionOptions));
 
 if (process.env.HADOOP_API_URL) {
-  const url = process.env.HADOOP_API_URL
-  const conf = {target: url, changeOrigin: true}
-  app.use('/jmx', proxy(conf))
-  app.use('/explorer.html', proxy(conf));
-  app.use('/explorer.js', proxy(conf));
-  app.use('/static', proxy(conf));
-  app.use('/webhdfs', proxy(conf));
+  const filter = (pathname, req) => (
+    pathname.match(/^\/explorer\.(html|js).*|^\/(static|webhdfs)\/.*|^\/jmx.*/) &&
+      req.method === 'GET'
+  )
+
+  app.use(proxy(filter, { target: process.env.HADOOP_API_URL, changeOrigin: true }))
+}
+
+if (process.env.CM_API_URL) {
+  const filter = (pathname, req) => (
+    pathname.match(/^\/api\/v14\/clusters\/cluster\/services\/yarn\/config/) &&
+      req.method === 'GET'
+  )
+
+  app.use(proxy(filter, { target: process.env.CM_API_URL, changeOrigin: true }))
 }
 
 if (USE_CAS) {
