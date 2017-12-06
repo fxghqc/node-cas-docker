@@ -9,7 +9,7 @@ module.exports = new ConnectCas({
   debug: true,
   ignore: [
     /\/ignore/,
-    /\/s\/public/,
+    /\/s(\?|\/)/,
     /^.*\.js$/,  // ignore webpack react router splitted codes
     /^.*\.css$/,  // ignore css codes
     /^.*\.(png|gif|cur|ico|svg|jpeg|jpg)$/, // ignore images
